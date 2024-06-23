@@ -19,13 +19,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-    private List<User> userList;
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.UserViewHolder> {
+    private List<Data> dataList;
     private Context context;
     private MainActivity mainActivity;
 
-    public UserAdapter(List<User> userList, Context context) {
-        this.userList = userList;
+    public DataAdapter(List<Data> userList, Context context) {
+        this.dataList = userList;
         this.context = context;
 
         // Check if context is an instance of MainActivity and set mainActivity
@@ -37,40 +37,40 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_component, parent,
                 false);
         return new UserViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position)
-    {
-        User user = userList.get(position);
-        holder.name.setText(user.getName());
-        holder.email.setText(user.getEmail());
-        holder.NIK.setText(user.getNik());
-        holder.NIM.setText(user.getNim());
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        Data data = dataList.get(position);
+        holder.nama_komponen.setText(data.getNama_komponen());
+        holder.jenis.setText(data.getJenis());
+        holder.merek.setText(data.getMerek());
+        holder.detail.setText(data.getDetail());
 
         // Mengatur OnClickListener pada itemView untuk menangani tap pada item
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mainActivity != null) {
-                    mainActivity.showUpdateDialog(user);
+                    mainActivity.showUpdateDialog(data);
                 }
             }
         });
 
+
         // Mengatur OnClickListener pada tombol delete untuk menangani tap pada tombol delete
-        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+       holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDeleteConfirmationDialog(user.getId());
+                showDeleteConfirmationDialog(data.getId());
             }
         });
     }
     @Override
     public int getItemCount() {
-        return userList.size();
+        return dataList.size();
     }
 
     private void showDeleteConfirmationDialog(final int userId) {
@@ -92,14 +92,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     // Metode untuk menghapus pengguna dari daftar dan server
     private void deleteUser(int userId) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<Void> call = apiService.deleteUser(userId);
+        Call<Void> call = apiService.deleteData(userId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    for (int i = 0; i < userList.size(); i++) {
-                        if (userList.get(i).getId() == userId) {
-                            userList.remove(i);
+                    for (int i = 0; i < dataList.size(); i++) {
+                        if (dataList.get(i).getId() == userId) {
+                            dataList.remove(i);
                             notifyItemRemoved(i);
                             break;
                         }}
@@ -116,19 +116,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 Toast.makeText(context, "Failed to delete user: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
-
-
     // ViewHolder untuk UserAdapter
     public class UserViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, email,NIK, NIM;
+        public TextView nama_komponen, jenis,merek, detail;
         public Button buttonDelete;
         public UserViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.textViewName);
-            email = itemView.findViewById(R.id.textViewEmail);
-            NIK = itemView.findViewById(R.id.textViewNik);
-            NIM = itemView.findViewById(R.id.textViewNim);
+            nama_komponen = itemView.findViewById(R.id.textViewKomponen);
+            jenis = itemView.findViewById(R.id.textViewJenis);
+            merek = itemView.findViewById(R.id.textViewMerek);
+            detail = itemView.findViewById(R.id.textViewDetail);
             buttonDelete = itemView.findViewById(R.id.buttonDelete);
         }
     }

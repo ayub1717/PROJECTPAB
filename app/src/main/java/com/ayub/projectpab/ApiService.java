@@ -11,7 +11,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 public interface ApiService {
     @POST("input_data.php")
-    Call<Void> insertKomponen(@Body Data data);
+    Call<Void> insertData(@Body Data data);
     @GET("get_data.php")
     Call<List<Data>> getData();
     @PUT("update_data.php")

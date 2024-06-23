@@ -6,30 +6,29 @@ import com.google.gson.annotations.SerializedName;
 public class Data {
     @SerializedName("id")
     private int id;
-    @SerializedName("name")
-    private String name;
-    @SerializedName("email")
-    private String email;
+    @SerializedName("nama_komponen")
+    private String nama_komponen;
+    @SerializedName("jenis")
+    private String jenis;
 
-
-    @SerializedName("NIK")
-    private String NIK;
-    @SerializedName("NIM")
-    private String NIM;
+    @SerializedName("merek")
+    private String merek;
+    @SerializedName("detail")
+    private String detail;
     // Konstruktor untuk membuat objek User baru
-    public User(int id, String name, String email, String NIK, String NIM) {
+    public Data(int id, String nama_komponen, String jenis, String merek, String detail) {
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.NIK = NIK;
-        this.NIM = NIM;
+        this.nama_komponen = nama_komponen;
+        this.jenis = jenis;
+        this.merek = merek;
+        this.detail = detail;
     }
     // Konstruktor untuk membuat objek User tanpa id (misalnya, untuk menambahkan user baru)
-    public User(String name, String email, String NIK, String NIM) {
-        this.name = name;
-        this.email = email;
-        this.NIK = NIK;
-        this.NIM = NIM;
+    public Data(String nama_komponen, String jenis, String merek, String detail) {
+        this.nama_komponen = nama_komponen;
+        this.jenis = jenis;
+        this.merek = merek;
+        this.detail = detail;
     }
     // Getter untuk mendapatkan id user
     public int getId() {
@@ -43,31 +42,31 @@ public class Data {
 
 
     // Getter untuk mendapatkan nama user
-    public String getName() {
-        return name;
+    public String getNama_komponen() {
+        return nama_komponen;
     }
     // Setter untuk mengatur nama user
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Komponen) {
+        this.nama_komponen = nama_komponen;
     }
     // Getter untuk mendapatkan email user
-    public String getEmail() {
-        return email;
+    public String getJenis() {
+        return jenis;
     }
     public void setEmail(String email) {
-        this.email = email;
+        this.jenis = jenis;
     }
 
-    public String getNik() {
-        return NIK;
+    public String getMerek() {
+        return merek;
     }
-    public void setNIK(String Nik) {
-        this.NIK = Nik;
+    public void setMerek(String Nik) {
+        this.merek = merek;
     }
-    public String getNim() {
-        return NIM;
+    public String getDetail() {
+        return detail;
     }
-    public void setNIM(String Nim) {
-        this.NIM = Nim;
+    public void setDetail(String Detail) {
+        this.detail = Detail;
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,30 +23,30 @@ import retrofit2.Callback;
 import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
-    private List<User> userList = new ArrayList<>();
+    private DataAdapter dataAdapter;
+    private List<Data> dataList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userAdapter = new UserAdapter(userList, this);
-        recyclerView.setAdapter(userAdapter);
+        dataAdapter = new DataAdapter(dataList, this);
+        recyclerView.setAdapter(dataAdapter);
         findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAddUserDialog();
             }
         });
-        fetchUsers();
+        fetchData();
     }
 
     private void showAddUserDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add User");
 
-        View view = getLayoutInflater().inflate(R.layout.dialog_add_user, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_add_data, null);
         final EditText editTextName = view.findViewById(R.id.editTextName);
         final EditText editTextEmail = view.findViewById(R.id.editTextEmail);
         final EditText editTextNik = view.findViewById(R.id.editTextNik);
@@ -66,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void addUser(String name, String email, String NIK, String NIM) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        User user = new User(name, email, NIK, NIM);
-        Call<Void> call = apiService.insertUser(user);
+        Data data = new Data(name, email, NIK, NIM);
+        Call<Void> call = apiService.insertData(data);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(MainActivity.this, "User added successfully", Toast.LENGTH_SHORT).show();
-                    fetchUsers();
+                    fetchData();
                 } else {
                     Toast.makeText(MainActivity.this, "Failed to add user: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -85,26 +86,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void fetchUsers() {
+    private void fetchData() {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<List<User>> call = apiService.getUsers();
-        call.enqueue(new Callback<List<User>>() {
+        Call<List<Data>> call = apiService.getData();
+        call.enqueue(new Callback<List<Data>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response)
+            public void onResponse(Call<List<Data>> call, Response<List<Data>> response)
             {
                 if (response.isSuccessful()) {
-                    userList.clear();
-                    userList.addAll(response.body());
-                    userAdapter.notifyDataSetChanged();
+                    dataList.clear();
+                    dataList.addAll(response.body());
+                    dataAdapter.notifyDataSetChanged();
                 } else {
                     Log.e("MainActivity", "Response error: " + response.errorBody().toString());
-                    Toast.makeText(MainActivity.this, "Failed to fetch users: "
+                    Toast.makeText(MainActivity.this, "Failed to fetch Data Komponen: "
                             + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failed to fetch users" + t.getMessage(),
+            public void onFailure(Call<List<Data>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed to fetch Data Komponen" + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -112,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUser(int id, String name, String email, String NIK, String NIM) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        User user = new User(id, name, email, NIK, NIM);
-        Call<Void> call = apiService.updateUser(user);
+        Data data = new Data(id, name, email, NIK, NIM);
+        Call<Void> call = apiService.updateData(data);
 
         Log.d("MainActivity", "Updating user: " + id + ", " + name + ", " + email +", " + NIK + ", " + NIM);
         call.enqueue(new Callback<Void>() {
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("MainActivity", "User updated successfully");
                     Toast.makeText(MainActivity.this, "User updated successfully",
                             Toast.LENGTH_SHORT).show();
-                    fetchUsers();  // Refresh user list
+                    fetchData();  // Refresh user list
                 } else {
                     Log.e("MainActivity", "Response error: " + response.errorBody().toString());
                     Toast.makeText(MainActivity.this, "Failed to update user"+ response.message(),
@@ -138,32 +139,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void showUpdateDialog(final User user) {
+    public void showUpdateDialog(final Data data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update User");
 
-        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_update_user,
+        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_update_data,
                 (ViewGroup) findViewById(android.R.id.content), false);
-        final EditText inputName = viewInflated.findViewById(R.id.editTextName);
-        final EditText inputEmail = viewInflated.findViewById(R.id.editTextEmail);
-        final EditText inputNik = viewInflated.findViewById(R.id.editTextNik);
-        final EditText inputNim = viewInflated.findViewById(R.id.editTextNim);
+        final EditText inputKomponen = viewInflated.findViewById(R.id.editTextName);
+        final EditText inputJenis = viewInflated.findViewById(R.id.editTextEmail);
+        final EditText inputMerek = viewInflated.findViewById(R.id.editTextNik);
+        final EditText inputDetail = viewInflated.findViewById(R.id.editTextNim);
 
-        inputName.setText(user.getName());
-        inputEmail.setText(user.getEmail());
-        inputNik.setText(user.getNik());
-        inputNim.setText(user.getNim());
+        inputKomponen.setText(data.getNama_komponen());
+        inputJenis.setText(data.getJenis());
+        inputMerek.setText(data.getMerek());
+        inputDetail.setText(data.getDetail());
 
         builder.setView(viewInflated);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                String name = inputName.getText().toString();
-                String email = inputEmail.getText().toString();
-                String Nik = inputNik.getText().toString();
-                String Nim = inputNim.getText().toString();
-                updateUser(user.getId(), name, email, Nik, Nim);
+                String komponen = inputKomponen.getText().toString();
+                String jenis = inputJenis.getText().toString();
+                String merek = inputMerek.getText().toString();
+                String detail = inputDetail.getText().toString();
+                updateUser(data.getId(), komponen, jenis, merek, detail);
             }
         });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -176,6 +177,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshData() {
-        fetchUsers();
+        fetchData();
     }
 }
