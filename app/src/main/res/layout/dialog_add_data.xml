@@ -1,28 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp"
+android:background="@android:color/white">
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputLayoutName"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-    <EditText
+    android:hint="Name">
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name" />
-    <EditText
-        android:id="@+id/editTextEmail"
+        android:layout_height="wrap_content"/>
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputLayoutJenis"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Jenis">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextJenis"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email" />
-    <EditText
-        android:id="@+id/editTextNik"
+        android:layout_height="wrap_content"/>
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputLayoutMerk"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Merk">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextMerk"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NIK" />
-    <EditText
-        android:id="@+id/editTextNim"
+        android:layout_height="wrap_content"/>
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputLayoutDetail"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Detail">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NIM" />
+        android:layout_height="wrap_content"/>
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<LinearLayout
+    android:id="@+id/textInputLayoutFoto"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 </LinearLayout>
+</LinearLayout>
+

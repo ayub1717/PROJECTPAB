@@ -36,47 +36,47 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddUserDialog();
+                showAddKomponenDialog();
             }
         });
         fetchData();
     }
 
-    private void showAddUserDialog() {
+    private void showAddKomponenDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add User");
+        builder.setTitle("Add Data Komponen");
 
         View view = getLayoutInflater().inflate(R.layout.dialog_add_data, null);
         final EditText editTextName = view.findViewById(R.id.editTextName);
-        final EditText editTextEmail = view.findViewById(R.id.editTextEmail);
-        final EditText editTextNik = view.findViewById(R.id.editTextNik);
-        final EditText editTextNim = view.findViewById(R.id.editTextNim);
+        final EditText editTextJenis = view.findViewById(R.id.editTextJenis);
+        final EditText editTextMerk = view.findViewById(R.id.editTextMerk);
+        final EditText editTextDetail = view.findViewById(R.id.editTextDetail);
         builder.setView(view);
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = editTextName.getText().toString();
-                String email = editTextEmail.getText().toString();
-                String NIK = editTextNik.getText().toString();
-                String NIM = editTextNim.getText().toString();
-                addUser(name, email, NIK, NIM);
+                String jenis = editTextJenis.getText().toString();
+                String merk = editTextMerk.getText().toString();
+                String detail = editTextDetail.getText().toString();
+                addData(name, jenis, merk, detail);
             }
         });
         builder.setNegativeButton("Cancel", null);
         builder.create().show();
     }
-    private void addUser(String name, String email, String NIK, String NIM) {
+    private void addData(String name, String jenis, String merk, String detail) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Data data = new Data(name, email, NIK, NIM);
+        Data data = new Data(name, jenis, merk, detail);
         Call<Void> call = apiService.insertData(data);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "User added successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Data Komponen Berhasil Di Tambahkan", Toast.LENGTH_SHORT).show();
                     fetchData();
                 } else {
-                    Toast.makeText(MainActivity.this, "Failed to add user: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Gagal Menambahkan Data Komponen: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -111,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUser(int id, String name, String email, String NIK, String NIM) {
+    private void updateUser(int id, String nama_komponen, String jenis, String merk, String detail) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Data data = new Data(id, name, email, NIK, NIM);
+        Data data = new Data(id, nama_komponen, jenis, merk, detail);
         Call<Void> call = apiService.updateData(data);
 
-        Log.d("MainActivity", "Updating user: " + id + ", " + name + ", " + email +", " + NIK + ", " + NIM);
+        Log.d("MainActivity", "Update Data Komponen: " + id + ", " + nama_komponen + ", " + jenis +", " + merk + ", " + detail);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -138,43 +138,59 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+        findViewById(R.id.buttonUpdate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
+
     public void showUpdateDialog(final Data data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update User");
-
-        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_update_data,
-                (ViewGroup) findViewById(android.R.id.content), false);
-        final EditText inputKomponen = viewInflated.findViewById(R.id.editTextName);
-        final EditText inputJenis = viewInflated.findViewById(R.id.editTextEmail);
-        final EditText inputMerek = viewInflated.findViewById(R.id.editTextNik);
-        final EditText inputDetail = viewInflated.findViewById(R.id.editTextNim);
+        View view = getLayoutInflater().inflate(R.layout.dialog_update_data, null);
+        final EditText inputKomponen = view.findViewById(R.id.editTextName);
+        final EditText inputJenis = view.findViewById(R.id.editTextJenis);
+        final EditText inputMerk = view.findViewById(R.id.editTextMerk);
+        final EditText inputDetail = view.findViewById(R.id.editTextDetail);
 
         inputKomponen.setText(data.getNama_komponen());
         inputJenis.setText(data.getJenis());
-        inputMerek.setText(data.getMerek());
+        inputMerk.setText(data.getMerk());
         inputDetail.setText(data.getDetail());
 
-        builder.setView(viewInflated);
+        builder.setView(view);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 String komponen = inputKomponen.getText().toString();
                 String jenis = inputJenis.getText().toString();
-                String merek = inputMerek.getText().toString();
+                String merk = inputMerk.getText().toString();
                 String detail = inputDetail.getText().toString();
-                updateUser(data.getId(), komponen, jenis, merek, detail);
+                updateUser(data.getId(), komponen, jenis, merk, detail);
             }
         });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
+        builder.setNegativeButton("Cancel", null);
+        builder.create().show();
+
     }
+   public void showDetail(final Data data){
+
+       AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       builder.setTitle("Detail Data");
+       View view = getLayoutInflater().inflate(R.layout.detail_komponen, null);
+       final EditText inputKomponen = view.findViewById(R.id.editTextNamaKomponen);
+       final EditText inputDetail = view.findViewById(R.id.editTextDetail);
+       inputDetail.setText(data.getDetail());
+       inputKomponen.setText(data.getNama_komponen());
+       builder.setView(view);
+
+       builder.setNegativeButton("Cancel", null);
+       builder.create().show();
+
+   }
 
     public void refreshData() {
         fetchData();

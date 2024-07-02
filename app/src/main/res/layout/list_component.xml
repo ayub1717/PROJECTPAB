@@ -3,15 +3,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+        <ImageView
+            android:id="@+id/imageViewPhoto"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            android:src="@drawable/sample"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="?android:attr/selectableItemBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/nama"
@@ -19,86 +47,121 @@
                 android:layout_height="wrap_content"
                 android:text="Nama: "
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/textViewName"
+                android:id="@+id/textViewKomponen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
             <TextView
-                android:id="@+id/email"
+                android:id="@+id/jenis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email: "
+                android:text="Jenis: "
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/textViewEmail"
+                android:id="@+id/textViewJenis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
-                android:textSize="16sp" />
+                android:text="Jenis"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
             <TextView
-                android:id="@+id/NIK"
+                android:id="@+id/merk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NIK: "
+                android:text="Merk: "
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
             <TextView
-                android:id="@+id/textViewNik"
+                android:id="@+id/textViewMerk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NIK"
-                android:textSize="18sp"/>
+                android:text="Merk"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
             <TextView
-                android:id="@+id/NIM"
+                android:id="@+id/detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nim: "
+                android:text="Detail: "
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
             <TextView
-                android:id="@+id/textViewNim"
+                android:id="@+id/textViewDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NIM"
-                android:textSize="18sp" />
+                android:text="Detail"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
-        <Button
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="">
+        <ImageView
             android:id="@+id/buttonDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_gravity="center"
-            android:text="Hapus data" />
+            android:contentDescription="Selected Image"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/delete"
+            app:tint="@color/red" />
+        <ImageView
+            android:id="@+id/buttonUpdate"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:contentDescription="Selected Image"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/update" />
+</LinearLayout>
 
     </LinearLayout>
-
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
